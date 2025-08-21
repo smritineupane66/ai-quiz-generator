@@ -2,6 +2,7 @@
 
 import mongoose from "mongoose";
 
+//Define Schema
 const quizSchema = new mongoose.Schema({
     title:{type:String,required:true},
     questions:[
@@ -11,7 +12,7 @@ const quizSchema = new mongoose.Schema({
             answer:{type:String,required:true}
         }
     ],
-},{ timestamps: true })
+},{ timestamps: true })  //this automatically adds two fields createdAt and updatedAt helps to track when quiz was created or updated 
 
-const Quiz = mongoose.model('Quiz', quizSchema);
+const Quiz = mongoose.model('Quiz', quizSchema);  //convert schema into model
 export default Quiz;

@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-app.use('/api/quiz',quizRoutes);
+app.use('/quiz',quizRoutes);
 
 //connect to MongoDB
 connectDB();
