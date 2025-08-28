@@ -1,7 +1,7 @@
 //Handles logic for creating a quiz its purpose is to recieve request
 // uses model to save data and send response 
-import Quiz from "../models/Quiz.js";
-import AIService from "../services/aiService.js";
+// import Quiz from "../models/Quiz.js";
+// import AIService from "../services/aiService.js";
 
 // //Create a quiz
 // const createQuiz = async (req, res) => {
@@ -64,23 +64,39 @@ import AIService from "../services/aiService.js";
 
 // export { createQuiz, getQuizzes, getQuizById , updateQuiz} 
 
-const generateQuiz = async(req,res)=>{
+// controllers/quizController.js
+import Quiz from "../models/Quiz.js";
+import AIService from "../services/aiService.js";
+
+const generateQuiz = async (req, res) => {
+  const { topic } = req.body;
+
+  if (!topic) return res.status(400).json({ message: "Topic is required" });
+
   try {
-    const {topic} = req.body;
+    // Call AI service
+    const quizText = await AIService.generateQuiz(topic);
+    console.log("QuizText from AI:", quizText);
 
-    //call service to get question from ai api
-    const questions = await AIService.generateQuiz(topic)
-    
+    // Save in DB
+    const quiz = await Quiz.create({
+      topic,
+      questions: [quizText], // store as array
+    });
 
-     // Save to MongoDB
-    const newQuiz = await Quiz.create({ topic, questions });
-
-    // Respond to client
-    res.json({ message: "Quiz generated successfully", quiz: newQuiz });
+    return res.json({
+      success: true,
+      message: "Quiz Generated Successfully",
+      quiz,
+    });
 
   } catch (error) {
-      res.status(500).json({ message: "Error generating quiz", error: error.message });
-    
+    console.error("Controller Error:", error.message);
+    return res.status(500).json({
+      message: "Error generating quiz",
+      error: error.message,
+    });
   }
-}
-export default generateQuiz
+};
+
+export default generateQuiz;

@@ -3,11 +3,11 @@
 import mongoose from "mongoose";
 
 //Define Schema
-// const questionSchema = new mongoose.Schema({
-//     question:String,
-//     options:[String],
-//     correctAnswer:String
-// });
+const questionSchema = new mongoose.Schema({
+    question:String,
+    options:[String],
+    correctAnswer:String
+});
 
 // const quizSchema = new mongoose.Schema({
 //     title:{type:String,required:true},
