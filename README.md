@@ -20,7 +20,7 @@
 * Node.js
 * Express.js
 * MongoDB / Mongoose
-* AI API (e.g., OpenAI GPT)
+* Hugging Face API (AI text generation)
 * dotenv for environment variables
 
 ---
@@ -37,8 +37,7 @@ npm install
 
 ```
 MONGO_URI=your_mongo_uri
-JWT_SECRET=your_secret
-AI_API_KEY=your_ai_key
+HF_API_KEY=your_hf_key
 PORT=5000
 ```
 
@@ -60,9 +59,41 @@ ai-quiz-generator/
 ├─ routes/         # API route definitions
 ├─ config/         # Database connection & environment setup
 ├─ utils/          # Helper functions
-├─ app.js          # Entry point of the application
+├─ server.js       # Entry point of the application
 └─ package.json
 ```
+
+---
+
+## Issues I Faced
+
+While testing with Postman:
+
+* Got response:
+
+  ```json
+  { "message": "Error generating quiz", "error": "Error generating quiz" }
+  ```
+
+* In terminal logs:
+
+  ```
+  HF API error: Not Found
+  Controller Error: Error generating quiz
+  ```
+
+### Possible reasons:
+
+* Wrong Hugging Face model endpoint
+* Free model not supporting inference API
+* API key valid but model unavailable
+
+---
+
+## What I Expect Help With
+
+* Correct Hugging Face model endpoint (free + text generation).
+* Fixing Postman request so `/quiz/generate` works.
 
 ---
 
@@ -80,4 +111,3 @@ ai-quiz-generator/
 MIT License © \[Smriti Neupane]
 
 ---
-
